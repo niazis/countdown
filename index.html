@@ -17,12 +17,15 @@
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             padding: 20px; /* Adjusted padding for the entire container */
-            width: fit-content; /* Container width adjusts to content */
+            width: 90%; /* Make container width responsive */
+            max-width: 600px; /* Maximum width for larger screens */
             text-align: center; /* Center text within container */
+            margin: auto; /* Center container horizontally */
         }
         h1 {
             color: #f59e0b; /* Bright color for the heading */
             margin-bottom: 20px; /* Space below the heading */
+            font-size: 1.75rem; /* Adjust font size for responsiveness */
         }
         .result, .message {
             font-size: 1.25rem;
@@ -31,16 +34,16 @@
         }
         .time-unit {
             display: inline-block;
-            padding: 10px 15px;
+            padding: 8px 12px; /* Adjust padding for smaller screens */
             margin: 5px;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.1);
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem; /* Adjust font size for responsiveness */
         }
         .time-unit span {
             display: block;
-            font-size: 1.5rem;
+            font-size: 1.25rem; /* Adjust font size for responsiveness */
             font-weight: bold;
         }
         .time-unit-label {
@@ -65,6 +68,23 @@
         }
         .hidden {
             display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.5rem; /* Smaller font size for smaller screens */
+            }
+            .time-unit {
+                padding: 6px 10px; /* Smaller padding for mobile screens */
+                font-size: 0.9rem; /* Smaller font size for mobile screens */
+            }
+            .time-unit span {
+                font-size: 1.1rem; /* Smaller font size for mobile screens */
+            }
+            .container {
+                padding: 15px; /* Smaller padding for mobile screens */
+            }
         }
     </style>
 </head>

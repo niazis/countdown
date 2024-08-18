@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon link -->
+    <style>
+        body {
+            background-color: #121212; /* Darker background for a night mode effect */
+            color: #e2e8f0; /* Light text color */
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            background-color: #1e293b; /* Darker background for the container */
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 20px; /* Adjusted padding for the entire container */
+            width: fit-content; /* Container width adjusts to content */
+            text-align: center; /* Center text within container */
+        }
+        h1 {
+            color: #f59e0b; /* Bright color for the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        .result, .message {
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .time-unit {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .time-unit span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .time-unit-label {
+            color: #a0aec0;
+        }
+        .time-unit-value {
+            color: #e2e8f0;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center">Countdown to October 15th ❤️</h1>
+        <div id="result" class="text-center">
+            <div id="months" class="time-unit pulse">
+                <span id="months-value">0</span>
+                <div class="time-unit-label">Month</div>
+            </div>
+            <div id="days" class="time-unit pulse">
+                <span id="days-value">0</span>
+                <div class="time-unit-label">Days</div>
+            </div>
+            <div id="hours" class="time-unit pulse">
+                <span id="hours-value">0</span>
+                <div class="time-unit-label">Hours</div>
+            </div>
+            <div id="minutes" class="time-unit pulse">
+                <span id="minutes-value">0</span>
+                <div class="time-unit-label">Minutes</div>
+            </div>
+            <div id="seconds" class="time-unit pulse">
+                <span id="seconds-value">0</span>
+                <div class="time-unit-label">Seconds</div>
+            </div>
+        </div>
+        <div id="message" class="text-center mt-6 text-2xl font-semibold hidden">
+            Congratulations on the wedding!
+        </div>
+    </div>
+    <script>
+        let countdownInterval;
+
+        function updateCountdown(futureDate) {
+            const now = new Date();
+            const timeDiff = futureDate - now;
+
+            if (timeDiff <= 0) {
+                // Hide countdown elements and show the congratulatory message
+                document.getElementById('result').style.display = 'none';
+                document.getElementById('message').style.display = 'block';
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            // Calculate total remaining time
+            const totalSeconds = Math.floor(timeDiff / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+
+            // Calculate months and days separately
+            const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const futureDateOnly = new Date(futureDate.getFullYear(), futureDate.getMonth(), futureDate.getDate());
+            const diffInDays = Math.floor((futureDateOnly - nowDate) / (1000 * 60 * 60 * 24));
+
+            const monthsDiff = Math.floor(diffInDays / 30); // Approximate months
+            const daysDiff = diffInDays % 30;
+
+            // Calculate hours, minutes, and seconds
+            const hoursDiff = Math.floor(totalHours % 24);
+            const minutesDiff = Math.floor(totalMinutes % 60);
+            const secondsDiff = Math.floor(totalSeconds % 60);
+
+            // Update the HTML elements
+            document.getElementById('months-value').innerText = monthsDiff;
+            document.getElementById('days-value').innerText = daysDiff;
+            document.getElementById('hours-value').innerText = hoursDiff;
+            document.getElementById('minutes-value').innerText = minutesDiff;
+            document.getElementById('seconds-value').innerText = secondsDiff;
+        }
+
+        // Hardcoded future date: October 14th, 3:00 PM EST
+        const futureDate = new Date();
+        futureDate.setMonth(9);  // October (months are 0-indexed)
+        futureDate.setDate(14);
+        futureDate.setHours(15, 0, 0, 0);  // 3:00 PM
+
+        updateCountdown(futureDate); // Initial update
+        countdownInterval = setInterval(() => updateCountdown(futureDate), 1000); // Update every second
+    </script>
+</body>
+</html>
